@@ -1,0 +1,111 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.pyo
+*.db
+*.sqlite3
+
+# Django migrations
+*/migrations/
+*/migrations/*.pyc
+
+# Media and static files
+#/media
+#/staticfiles
+#/static
+
+# Local settings
+
+
+# Environment variables
+#.env
+#.env.*
+
+# VS Code settings
+.vscode/
+
+# PyCharm settings
+.idea/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Test and coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+
+# pip
+pip-log.txt
+pip-delete-this-directory.txt
+
+# virtualenv
+venv/
+ENV/
+env/
+.venv/
+.ENV/
+.env/
+shodan_venv/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytest
+.pytest_cache/
+
+# celery beat schedule files
+celerybeat-schedule
+celerybeat.pid
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Sphinx documentation
+docs/_build/
+
+# pyright
+typings/
+
+# Node modules (if using npm/yarn for frontend)
+node_modules/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+MANIFEST
+
+# Backup files
+*~
+*.bak
+*.swp
+*.swo
+.xmind

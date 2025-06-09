@@ -1,0 +1,11 @@
+{
+    "release-type": "python",
+    "branches": [
+        "main"
+    ],
+    "packages": {
+        ".": {
+            "component": "falgoosh"
+        }
+    }
+}

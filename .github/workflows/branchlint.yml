@@ -1,0 +1,27 @@
+# .github/workflows/lint-branch-name.yml
+name: Lint Branch Name
+
+on:
+  push:
+    branches-ignore: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  branch-name-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check branch name
+        run: |
+          # Determine branch name from context
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            BRANCH_NAME="${{ github.head_ref }}"
+          else
+            BRANCH_NAME="${GITHUB_REF#refs/heads/}"
+          fi
+
+          echo "Branch name is $BRANCH_NAME"
+          if [[ ! "$BRANCH_NAME" =~ ^(feat|fix|chore|ci|docs|refactor|style|test|perf)/[a-z0-9._-]{3,50}$ ]]; then
+            echo "::error::Branch name '$BRANCH_NAME' is invalid. Must follow <type>/<name> format, e.g. 'feat/my-feature'. 3-50 chars."
+            exit 1
+          fi

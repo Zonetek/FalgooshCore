@@ -1,0 +1,13 @@
+{
+    "name": "commitlint-config",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "lint": "commitlint --from=$(git rev-list --max-parents=0 HEAD) --to=HEAD --verbose"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^18.0.0",
+        "@commitlint/config-conventional": "^18.0.0"
+    }
+}

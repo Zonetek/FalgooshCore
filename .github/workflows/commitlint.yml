@@ -3,7 +3,8 @@ name: Lint Commits
 on:
   pull_request:
     branches: [main]
-
+  push:
+    branches: [main] 
 jobs:
   commitlint:
     runs-on: ubuntu-latest

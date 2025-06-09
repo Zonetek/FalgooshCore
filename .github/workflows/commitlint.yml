@@ -3,22 +3,39 @@ name: Lint Commits
 on:
   pull_request:
     branches: [main]
- 
+
 jobs:
   commitlint:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .github/commitlint
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
 
-      - name: Install Commitlint
-        run: npx install-peerdeps --dev @commitlint/config-conventional
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Commitlint
-        uses: wagoid/commitlint-github-action@v5
-        with:
-          configFile: .github/commitlint/commitlintrc.yml
+      - name: Get commit range for PR
+        if: github.event_name == 'pull_request'
+        id: commit_range
+        run: |
+          git fetch origin ${{ github.event.pull_request.base.ref }} --depth=1
+          BASE_SHA=$(git merge-base HEAD origin/${{ github.event.pull_request.base.ref }})
+          echo "base_sha=$BASE_SHA" >> $GITHUB_OUTPUT
+
+      - name: Lint commits in PR
+        if: github.event_name == 'pull_request'
+        run: |
+          npx commitlint --from=${{ steps.commit_range.outputs.base_sha }} --to=HEAD --verbose
+
+      - name: Lint last 10 commits on push
+        if: github.event_name == 'push'
+        run: |
+          npx commitlint --from=HEAD~10 --to=HEAD --verbose

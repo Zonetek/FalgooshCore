@@ -1,0 +1,30 @@
+services:
+  discovery-producer:
+    build:
+      context: ../backend
+      dockerfile: ./docker/discovery-producer.Dockerfile
+    container_name: discovery-producer
+    command: python producer.py
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+
+  discovery-consumer:
+    build:
+      context: ../backend
+      dockerfile: ./docker/discovery-consumer.Dockerfile
+    container_name: discovery-consumer
+    command: python consumer.py
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbit
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest

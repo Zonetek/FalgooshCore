@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import (
@@ -63,10 +64,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         related_query_name="groups_permissions",
     )
 
+    # Explicitly set the objects manager at the class level
     objects = CustomUserManager()
 
-    USERNAME_FIELD = "username"
-    REQUIRED_FIELDS = ["email"]
+    # Ensure these fields are defined for the manager to work
+    EMAIL_FIELD = 'email'
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email']
 
     class Meta:
         verbose_name_plural = "Users"
@@ -79,7 +83,16 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 
 class UserProfile(models.Model):
+    """TODO
+    add related subscription model
+    """
+
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    scan_limit = models.IntegerField(default=0)
+    api_calls_remaining = models.IntegerField(default=100)
+    is_verified = models.BooleanField(default=False)
+    last_login_ip = models.GenericIPAddressField(null=True, blank=True)
+    session_id = models.UUIDField(default=uuid.uuid4, editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

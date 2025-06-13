@@ -1,4 +1,3 @@
-# .github/workflows/lint-branch-name.yml
 name: Lint Branch Name
 
 on:
